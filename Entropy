@@ -73,7 +73,7 @@ end
 function H = Entropy_ScalarInput(P)
 
    if(P > 1 || P < 0)
-       return
+       return 
    end
    
    % If P == 0 or P == 1 there is not point in computing according to def. 
