@@ -1,0 +1,87 @@
+%% Implementation: Oskar Mellegård
+
+% The other "Entropy-functions" are help-functions for each particular case
+
+function H = Entropy(P)
+
+% The Entropy function H(X)
+% P column vector: the vector is the probability distribution. 
+% P matrix: Each column vector is a probability distribution
+% P scalar: The binary entropy function of [P; 1-P]
+% P row vector: Each position gives binary entropy function <Your code>
+
+[r, c] = size(P);
+
+  % Row input : 
+  if(isrow(P) && not(r == 1 && c == 1))
+      H = Entropy_RowInput(P);  
+  end
+
+  % Column input : 
+  if(iscolumn(P))
+      H = Entropy_ColumnInput(P); 
+  end
+
+  % Scalar input : 
+  if(r == 1 && c == 1)
+      H = Entropy_ScalarInput(P);
+  end
+
+ % Matrix input : 
+  if(r > 1 && c > 1)
+      H = zeros(1, c);
+      for i = 1 : c
+          H(i) = Entropy_ColumnInput(P(:, i));     
+      end
+  end
+
+end
+
+%%
+% Support functions for modularity, for various 
+% data input formats: 
+ 
+function H = Entropy_ColumnInput(P)
+    
+    logP = zeros(size(P));      % Allocate memory
+    
+    % if P(i)=0 we'll set log(P(i)) = 0
+    % but this is already allocated so we just check whenever
+    % P(i) > 0 *strictly*
+    for i = 1 : length(P)
+        if(P(i) > 0)            
+            logP(i) = log2(P(i));        
+        end
+    end
+        
+    H = - P' * logP; 
+    
+end
+
+
+function H = Entropy_RowInput(P)
+
+   % Compute each by the already defined routine 
+   H = zeros(size(P));
+   for i = 1 : length(P)
+        H(i) = Entropy_ScalarInput(P(i));
+   end
+
+end
+
+
+function H = Entropy_ScalarInput(P)
+
+   if(P > 1 || P < 0)
+       return
+   end
+   
+   % If P == 0 or P == 1 there is not point in computing according to def. 
+   % as MATLAB doesn't understand limits
+   if(P == 0 || P == 1)
+        H = 0; 
+   else
+        H = - P * log2(P) - (1 - P) * log2(1 - P);
+   end
+   
+end
