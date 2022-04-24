@@ -2,7 +2,7 @@
 
 % Mutual information I(X:Y) 
 function I = MutualInformation(P)
-
+ 
 [r, c] = size(P);
 I = 0;  
 
