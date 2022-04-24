@@ -8,7 +8,7 @@ function H = Entropy(P)
 % P column vector: the vector is the probability distribution. 
 % P matrix: Each column vector is a probability distribution
 % P scalar: The binary entropy function of [P; 1-P]
-% P row vector: Each position gives binary entropy function <Your code>
+% P row vector: Each position gives binary entropy function
 
 [r, c] = size(P);
 
