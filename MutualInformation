@@ -1,0 +1,26 @@
+%% Implementation: Oskar Mellegård
+
+% Mutual information I(X:Y) 
+function I = MutualInformation(P)
+
+[r, c] = size(P);
+I = 0;  
+
+  for i = 1 : r
+      for j = 1 : c
+          if(P(i,j) > 0)  % if 0 the log2 limit will be 0, but MATLAB doesn't
+                        % know that 
+            I = I + P(i,j) * log2(P(i,j) / (MD(P(i,:)) * MD(P(:,j))));
+          end
+      end
+  end
+
+end
+
+% Support function; computes the row (or column) sum of array 'v'
+% i.e. the marginal distributions (abbrev. MD)
+function md = MD(v)
+
+    md = sum(v);
+
+end
